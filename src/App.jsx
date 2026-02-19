@@ -15,7 +15,12 @@ import { INITIAL_PRODUCTS } from './data/mockData';
 const Layout = ({ children, products }) => {
   const location = useLocation();
   const hideNavPaths = ["/", "/scan", "/claim"];
-  const showNav = !hideNavPaths.some(path => location.pathname.startsWith(path) && path !== "/");
+
+  const showNav = !hideNavPaths.some(path => {
+    if (path === "/") return location.pathname === "/";
+    return location.pathname.startsWith(path);
+  });
+
   const alertCount = products.filter(p => p.daysLeft >= 0 && p.daysLeft <= 30).length;
 
   return (
